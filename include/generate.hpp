@@ -119,26 +119,30 @@ Graph *genRandomMaze(int maze_order)
     while (target != maze_order - 1)
     {
         target = matrixTargetNode(maze_order, source);
-        if (target > maze_order-1)
+        if (target > maze_order - 1)
             cout << "source " << source << " -- target " << target << endl;
-        maze2return->insertEdge(source, 0.0, target, 0.0, 0.0);
+        int cost = rand.next() % 20;
+        maze2return->insertEdge(source, 0.0, target, 0.0, cost+1);
         source = target;
     }
 
     // 3rd: add some random edges if some node isnt being used
     while (!maze2return->allNodesUsed())
     {
-        source = rand.next() % maze_order;
+        vector<int> rcl = maze2return->nodesToUse();
+        int source_index = rand.next() % rcl.size();
+        source = rcl.at(source_index); // restricted candidate list
 
-        if (source != maze_order - 1 && maze2return->getNode(source)->getOutDegree() > 0 && maze2return->getNode(source)->getOutDegree() < 4)
+        if (source != maze_order - 1)
         {
             target = matrixTargetNode(maze_order, source);
             if (maze2return->getNode(target)->getOutDegree() == 0)
             {
-                maze2return->insertEdge(source, 0.0, target, 0.0, 0.0);
+                int cost = rand.next() % 20;
+                maze2return->insertEdge(source, 0.0, target, 0.0, cost+1);
             }
         }
-    } 
+    }
     return maze2return;
 }
 
@@ -152,7 +156,23 @@ void printMaze(Graph *maze)
 
     cout << "\nEntrance: " << 0 << endl;
     cout << "Exit: " << maze_order - 1 << endl;
-    cout << endl;
+    cout << "Edges weight (id id weight):" << endl;
+    for (Node *node = maze->getFirstNode(); node != nullptr; node = node->getNextNode())
+    {
+        for (Edge *edge = node->getFirstEdge(); edge != nullptr; edge = edge->getNextEdge())
+        {
+            if (edge->getPrinted() == false)
+            {
+                cout << "(" << node->getId() << " " << edge->getTargetId() << " " << edge->getWeight() << ")  ";
+                edge->setPrinted(true);
+                Edge *aux = maze->getNode(edge->getTargetId())->getEdge(node->getId());
+                aux->setPrinted(true);
+            }
+        }
+    }
+
+    cout << "\n\n\n"
+         << endl;
 
     for (size_t i = 0; i < maze_order / n + 1; i++)
     {

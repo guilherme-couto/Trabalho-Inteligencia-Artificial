@@ -22,29 +22,157 @@ int main(int argc, char const *argv[])
     Graph *maze = genRandomMaze(maze_order);
     cout << "Maze order: " << maze->getOrder() << endl;
     cout << "Maze edges count: " << maze->getNumberEdges() << endl;
-    cout << "Maze done!" << endl;
+    cout << "Done!" << endl;
     cout << "Print maze? (y/n) ";
     string yon;
     cin >> yon;
-    if(yon == "y" || yon == "Y")
+    if (yon == "y" || yon == "Y")
         printMaze(maze);
+
+    maze->create_matrix();
+    maze->dijsktra(maze_order - 1);
 
     int option;
     do
     {
-        cout << "\nEscolha uma opção\n" << endl;
-        cout << "1 - Backtracking" << endl;
-        cout << "2 - Busca em Largura" << endl;
-        cout << "3 - Busca em Profundidade" << endl;
-        cout << "4 - Busca Ordenada" << endl;
-        cout << "5 - Busca Gulosa" << endl;
-        cout << "6 - Busca A*" << endl;
-        cout << "7 - Busca IDA*" << endl;
-        cout << "8 - Todas as buscas" << endl;
-        cout << "0 - Sair" << endl;
+        cout << "\n\nEscolha uma opção\n"
+             << endl;
+        cout << "1 - Backtracking"
+             << "\t2 - Busca em Largura"
+             << "\t3 - Busca em Profundidade" << endl;
+        cout << "4 - Busca Ordenada"
+             << "\t5 - Busca Gulosa"
+             << "\t6 - Busca A*" << endl;
+        cout << "7 - Busca IDA*"
+             << "\t\t8 - Todas as buscas"
+             << "\t0 - Sair" << endl;
         cout << "\nSua opcao: ";
         cin >> option;
-    } while (option != 0 );
+
+        switch (option)
+        {
+        case 1:
+        {
+            auto start = chrono::high_resolution_clock::now();
+            maze->backtracking();
+            auto stop = chrono::high_resolution_clock::now();
+            auto duration = chrono::duration_cast<chrono::milliseconds>(stop - start);
+            cout << "Duração: " << duration.count() << " ms" << endl;
+        }
+        break;
+
+        case 2:
+        {
+            auto start = chrono::high_resolution_clock::now();
+            maze->breadthFirstSearch();
+            auto stop = chrono::high_resolution_clock::now();
+            auto duration = chrono::duration_cast<chrono::milliseconds>(stop - start);
+            cout << "Duração: " << duration.count() << " ms" << endl;
+        }
+        break;
+
+        case 3:
+        {
+            auto start = chrono::high_resolution_clock::now();
+            maze->deepSearch();
+            auto stop = chrono::high_resolution_clock::now();
+            auto duration = chrono::duration_cast<chrono::milliseconds>(stop - start);
+            cout << "Duração: " << duration.count() << " ms" << endl;
+        }
+        break;
+
+        case 4:
+        {
+            auto start = chrono::high_resolution_clock::now();
+            maze->buscaOrdenada();
+            auto stop = chrono::high_resolution_clock::now();
+            auto duration = chrono::duration_cast<chrono::milliseconds>(stop - start);
+            cout << "Duração: " << duration.count() << " ms" << endl;
+        }
+        break;
+
+        case 5:
+        {
+            auto start = chrono::high_resolution_clock::now();
+            maze->greedy();
+            auto stop = chrono::high_resolution_clock::now();
+            auto duration = chrono::duration_cast<chrono::milliseconds>(stop - start);
+            cout << "Duração: " << duration.count() << " ms" << endl;
+        }
+        break;
+
+        case 6:
+        {
+            auto start = chrono::high_resolution_clock::now();
+            maze->Astar();
+            auto stop = chrono::high_resolution_clock::now();
+            auto duration = chrono::duration_cast<chrono::milliseconds>(stop - start);
+            cout << "Duração: " << duration.count() << " ms" << endl;
+        }
+        break;
+
+        case 7:
+        {
+            auto start = chrono::high_resolution_clock::now();
+            maze->IDAstar();
+            auto stop = chrono::high_resolution_clock::now();
+            auto duration = chrono::duration_cast<chrono::milliseconds>(stop - start);
+            cout << "Duração: " << duration.count() << " ms" << endl;
+        }
+        break;
+
+        case 8:
+        {
+            auto start = chrono::high_resolution_clock::now();
+            maze->backtracking();
+            auto stop = chrono::high_resolution_clock::now();
+            auto duration = chrono::duration_cast<chrono::milliseconds>(stop - start);
+            cout << "Duração: " << duration.count() << " ms" << endl;
+
+            start = chrono::high_resolution_clock::now();
+            maze->breadthFirstSearch();
+            stop = chrono::high_resolution_clock::now();
+            duration = chrono::duration_cast<chrono::milliseconds>(stop - start);
+            cout << "Duração: " << duration.count() << " ms" << endl;
+
+            start = chrono::high_resolution_clock::now();
+            maze->deepSearch();
+            stop = chrono::high_resolution_clock::now();
+            duration = chrono::duration_cast<chrono::milliseconds>(stop - start);
+            cout << "Duração: " << duration.count() << " ms" << endl;
+
+            start = chrono::high_resolution_clock::now();
+            maze->buscaOrdenada();
+            stop = chrono::high_resolution_clock::now();
+            duration = chrono::duration_cast<chrono::milliseconds>(stop - start);
+            cout << "Duração: " << duration.count() << " ms" << endl;
+
+            start = chrono::high_resolution_clock::now();
+            maze->greedy();
+            stop = chrono::high_resolution_clock::now();
+            duration = chrono::duration_cast<chrono::milliseconds>(stop - start);
+            cout << "Duração: " << duration.count() << " ms" << endl;
+
+            start = chrono::high_resolution_clock::now();
+            maze->Astar();
+            stop = chrono::high_resolution_clock::now();
+            duration = chrono::duration_cast<chrono::milliseconds>(stop - start);
+            cout << "Duração: " << duration.count() << " ms" << endl;
+
+            start = chrono::high_resolution_clock::now();
+            maze->IDAstar();
+            stop = chrono::high_resolution_clock::now();
+            duration = chrono::duration_cast<chrono::milliseconds>(stop - start);
+            cout << "Duração: " << duration.count() << " ms" << endl;
+        }
+        break;
+
+        default:
+        {
+            break;
+        }
+        }
+    } while (option != 0);
 
     return 0;
 }

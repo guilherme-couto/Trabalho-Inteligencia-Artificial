@@ -89,9 +89,9 @@ Edge *Node::getEdge(int target_id)
 {
     Edge *edge = this->first_edge;
 
-    while(edge != nullptr)
+    while (edge != nullptr)
     {
-        if(edge->getTargetId() == target_id)
+        if (edge->getTargetId() == target_id)
             return edge;
         edge = edge->getNextEdge();
     }
@@ -140,16 +140,17 @@ void Node::insertEdge(int target_id, int target_position, float edge_weight)
         this->first_edge->setWeight(edge_weight);
         this->last_edge = this->first_edge;
     }
-    this->incrementOutDegree();
+    // this->incrementOutDegree();
 }
 
 void Node::removeAllEdges()
 {
     if (this->first_edge != nullptr)
     {
-        Edge *next = this->first_edge;;
+        Edge *next = this->first_edge;
+        ;
         Edge *aux = nullptr;
-        
+
         while (next != nullptr)
         {
             aux = next;
@@ -166,7 +167,7 @@ void Node::removeEdge(int id, bool directed, Node *target_node)
     {
         Edge *aux = this->first_edge;
         Edge *previous = nullptr;
-        
+
         while (aux->getTargetId() != id)
         {
             previous = aux;

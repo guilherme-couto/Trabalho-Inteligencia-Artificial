@@ -9,6 +9,7 @@ Edge::Edge(int target_id, int target_position)
     this->next_edge = nullptr;
     this->weight = 0.0;
     this->target_position = target_position;
+    this->printed = false;
 }
 
 // Destructor
@@ -51,4 +52,14 @@ void Edge::setNextEdge(Edge *edge)
 void Edge::setWeight(float weight)
 {
     this->weight = weight;
+}
+
+void Edge::setPrinted(bool printed)
+{
+    this->printed = printed;
+}
+
+bool Edge::getPrinted()
+{
+    return this->printed;
 }

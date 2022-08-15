@@ -11,6 +11,7 @@ private:
     int target_position;
     Edge *next_edge;
     float weight;
+    bool printed;
 
 public:
     // Constructor and destructor
@@ -22,10 +23,12 @@ public:
     int getTargetPosition();
     Edge *getNextEdge();
     float getWeight();
+    bool getPrinted();
 
     // Setters
     void setNextEdge(Edge *edge);
     void setWeight(float weight);
+    void setPrinted(bool printed);
 };
 
 #endif // EDGE_HPP_INCLUDED
